@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>{{ data?.priority }}[{{ data.type }}] {{ data.subject }}</h1>
+<div mat-dialog-content class='text-center'>
+  <ng-container *ngIf='data?.imageLink != "";else notClickable'>
+    <a [href]="data.imageLink" target='_blank'>
+      <img [src]="data.image" [alt]="data.subject" class='img-fluid'>
+    </a>
+    <p><i> (Click the image to open the reference) </i></p>
+  </ng-container>
+  <ng-template #notClickable>
+    <img [src]="data.image" [alt]="data.subject" class='img-fluid'>
+  </ng-template>
+  <div class='my-2' *ngIf='data?.link?.length'>
+    <h6>References:</h6>
+    <!-- {{ references }} -->
+    <p *ngFor='let reference of data?.link;let i=index'>
+      <a target="_blank" [href]="reference[0]">
+        {{ reference[1] }}
+      </a>
+    </p>
+  </div>
+  <h6 id='timestamp'>
+    Sent by {{ data.timestamp | date:"EEEE, MMMM d, y, h:mm:ss a" }}
+  </h6>
+  <h6 *ngIf='data?.required'>
+    {{ data?.ack ? "This communication is already acknowledged" : "Please acknowledge this communication" }}
+  </h6>
+</div>

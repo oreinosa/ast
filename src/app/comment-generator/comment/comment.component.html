@@ -1,0 +1,13 @@
+<h6>
+  <mat-checkbox [(ngModel)]='noCdmLicenses' name='noCdmLicenses'>
+    #NoCdmLicenses
+  </mat-checkbox>
+</h6>
+<button mat-button type='button' class='m-3' (click)='onSubmit()' [disabled]='form.invalid'>Generate and copy comment</button>
+<button mat-button type='button' class='m-3' (click)='onReset()' [disabled]='form?.pristine'>Reset</button>
+<button mat-button type='button' class='m-3' (click)='onRestore()'>Restore</button>
+<!-- <button mat-button type='button' class='m-3' (click)='onRestore()'>Restore</button> -->
+<br>
+<mat-form-field class='full-width'>
+  <textarea matInput rows='10' readonly [ngModel]='comment'></textarea>
+</mat-form-field>

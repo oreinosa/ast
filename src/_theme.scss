@@ -1,0 +1,52 @@
+@import '~@angular/material/theming';
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$primary-base: 600;
+$app-primary: mat-palette($mat-blue, $primary-base);
+$app-primary-light: mat-palette($mat-blue, $primary-base - 200);
+$app-primary-lighter: mat-palette($mat-blue, $primary-base - 400);
+// $app-primary: mat-palette($mat-blue);
+$app-accent:  mat-palette($mat-blue-grey);
+$app-warn:    mat-palette($mat-deep-orange);
+// Create the theme object (a Sass map containing all of the palettes).
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($app-theme);
+
+.light-theme{
+  $primary-base: 600;
+  $app-primary: mat-palette($mat-blue, $primary-base);
+  $app-accent:  mat-palette($mat-blue-grey);
+  $app-warn:    mat-palette($mat-deep-orange);
+  // Create the theme object (a Sass map containing all of the palettes).
+  $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+  // Include theme styles for core and each component used in your app.
+  // Alternatively, you can import and @include the theme mixins for each component
+  // that you are using.
+  @include angular-material-theme($app-theme);
+}
+
+// dark theme
+.dark-theme {
+  // color: $light-primary-text;
+  $dark-primary: mat-palette($mat-blue, 700);
+  $dark-accent: mat-palette($mat-amber, A400, A100, A700);
+  $dark-warn: mat-palette($mat-red);
+  $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+  @include angular-material-theme($dark-theme);
+}
+
+// Create your Sass color vars (will be available in all the project)
+// $primary: mat-color($app-primary);
+// $primary-light: mat-color($app-primary-light);
+// $primary-lighter: mat-color($app-primary-lighter);
+// $accent: mat-color($app-accent);
+// $warn: mat-color($app-warn);

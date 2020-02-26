@@ -1,0 +1,21 @@
+.mat-table{
+  .mat-cell, .mat-header-cell{
+    padding: 5px 7px;
+    text-align: center;
+  }
+  .mat-column-timestamp{
+    width: 15%;
+  }
+  .mat-column-category{
+    width: 10%;
+  }
+  .mat-column-subject{
+    width: 30%;
+  }
+  .mat-column-references{
+    width: 25%;
+  }
+  .mat-column-actions{
+    width: 20%;
+  }
+}

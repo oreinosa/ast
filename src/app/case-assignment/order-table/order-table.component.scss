@@ -1,0 +1,21 @@
+.mat-table{
+  width:100%;
+  .mat-cell{
+    padding: 0 5px;
+  }
+  .mat-column-ldap{
+    width: 20%;
+  }
+  .mat-column-name{
+    width: 35%;
+  }
+  .mat-column-monthly{
+    width: 10%;
+  }
+  .mat-column-daily{
+    width: 10%;
+  }
+  .mat-column-lastAssigned{
+    width: 25%;
+  }
+}

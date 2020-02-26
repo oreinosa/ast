@@ -1,0 +1,53 @@
+.landing-image-container{
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  img{
+    max-height:500px; 
+  }
+  .landing-header-container{
+    position:absolute;
+    padding-top: 17vw;
+    padding-left: 5vw;
+  }
+  .landing-header{
+    font-size: 55px;
+    font-weight: 600;
+  }
+  .landing-subheader{
+    font-size: 40px;
+    font-weight: 400;
+  }
+}
+
+.search{
+  height: 400px;
+  background-color: lightgray;
+  padding-top: 3vw;
+  text-align: center;
+  h5 {font-size: 30px;}
+  img{
+    margin-top: 15px;
+    max-height: 100px;
+  }
+  
+}
+
+.holidays{
+  background-color:lightgrey;
+}
+
+.links div .mat-card{
+  height:100%;
+}
+
+.link-container{
+  height:125px;
+  .mat-icon{
+    position:absolute;
+    bottom:15px;
+  }
+}

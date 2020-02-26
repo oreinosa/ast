@@ -1,0 +1,11 @@
+<div class="avatar-container text-center" *ngIf='!!user;else loadingUser'>
+  <h3>{{ user?.name }}</h3>
+  <h6>{{ user?.email }}</h6>
+  <h6>{{ user?.specialization }} - {{ user?.language }} - {{ user?.channel }}</h6>
+  <a routerLink='/profile'>My profile</a>
+</div>
+<ng-template #loadingUser>
+  <div class="loading py-5">
+    <mat-spinner class='mx-auto' diameter='50'></mat-spinner>
+  </div>
+</ng-template>

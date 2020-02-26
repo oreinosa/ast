@@ -1,0 +1,215 @@
+<mat-toolbar color="primary">
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <span>{{appName}}</span>
+  <span class="spacer"></span>
+  <ng-container *ngIf='!!quickLinks?.length'>
+    <button type='button' mat-icon-button *ngFor='let quickLink of quickLinks' (click)='openLink(quickLink.route)'
+      [matTooltip]='quickLink?.label'>
+      <mat-icon>{{ !!quickLink.icon ? quickLink.icon : "link"  }}</mat-icon>
+    </button>
+  </ng-container>
+
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav mat-elevation-z7" [opened]='options.opened' [mode]="options.mode"
+    [fixedInViewport]='options.fixed' [fixedTopGap]="options.top" [fixedBottomGap]="options.bottom">
+    <!-- <mat-toolbar class='sidenav-toolbar'>Menu</mat-toolbar> -->
+    <app-avatar></app-avatar>
+    <mat-nav-list>
+      <ng-container *ngFor='let link of links'>
+        <!-- CHECK IF LINK HAS CHILDREN FIRST -->
+        <!-- LINK WITH CHILDREN TEMPLATE -->
+        <ng-container *ngIf='!!link?.children?.length; else singleLink'>
+          <!-- PARENT LINK TO EXPAND CHILDREN -->
+          <a mat-list-item (click)='link.showChildren = !!!link?.showChildren'>
+            <mat-icon *ngIf='link?.icon'>{{ link.icon }}</mat-icon>
+            {{ link?.label }}
+            <mat-icon class='ml-auto'>{{ !!link?.showChildren ? "arrow_drop_down" : "arrow_left"}}</mat-icon>
+          </a>
+          <!-- // PARENT LINK TO EXPAND CHILDREN -->
+          <!-- SHOW CHILDREN IF showChildren IS TRUE -->
+          <ng-container *ngIf='!!link?.showChildren'>
+            <!-- FOR LOOP FOR CHILDREN -->
+            <ng-container *ngFor='let childLink of link.children'>
+              <!-- CHECK IF IT'S A LINK OR A ROUTE -->
+              <!-- CHILD LINK TEMPLATE -->
+              <ng-container *ngIf='!!childLink?.isLink;else routeLink'>
+                <div class="row mr-0">
+                  <div class="col-10">
+                    <a mat-list-item [href]="childLink?.route" target='_blank'>
+                      <mat-icon *ngIf='childLink?.icon'>{{ childLink.icon }}</mat-icon>
+                      <span class='pl-5'>{{ childLink?.label }}</span>
+                    </a>
+                  </div>
+                  <div class="col-2 px-0 pt-1">
+                    <button class='star-quickLink' mat-icon-button type='button' (click)='toggleQuickLink(childLink)'
+                      [disabled]='!(quickLinks.indexOf(childLink) >= 0) && quickLinks?.length >= quickLinksLimit'>
+                      <mat-icon class='mx-0'>{{ (quickLinks.indexOf(childLink) >= 0) ? "star" : "star_border"}}</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+              <!-- // CHILD LINK TEMPLATE -->
+              <!--  CHILD ROUTE TEMPLATE -->
+              <ng-template #routeLink>
+                <a mat-list-item [routerLink]="childLink?.route">
+                  <span class='pl-5'>
+                    <mat-icon *ngIf='childLink?.icon'>{{ childLink.icon }}</mat-icon>
+                    {{ childLink?.label }}
+                  </span>
+                </a>
+              </ng-template>
+              <!-- // CHILD ROUTE TEMPLATE -->
+              <!-- // CHECK IF IT'S A LINK OR A ROUTE -->
+            </ng-container>
+            <!-- // FOR LOOP FOR CHILDREN -->
+          </ng-container>
+        </ng-container>
+        <!-- // LINK WITH CHILDREN TEMPLATE -->
+        <!-- LINK WITHOUT CHILDREN TEMPLATE -->
+        <ng-template #singleLink>
+          <!-- CHECK IF IT'S A LINK OR A ROUTE -->
+          <!-- LINK TEMPLATE -->
+          <ng-container *ngIf='!!link?.isLink;else routeLink'>
+            <a mat-list-item [href]="link?.route" target='_blank'>
+              <mat-icon *ngIf='link?.icon'>{{ link.icon }}</mat-icon>
+              {{ link?.label }}
+              <button mat-icon-button type='button' class='ml-auto' (click)='toggleQuickLink(link)'>
+                <mat-icon class='mx-0'>{{ (quickLinks.indexOf(childLink) >= 0) ? "star" : "star_border"}}</mat-icon>
+              </button>
+            </a>
+          </ng-container>
+          <!-- // LINK TEMPLATE -->
+          <!-- ROUTE TEMPLATE -->
+          <ng-template #routeLink>
+            <a mat-list-item [routerLink]="link?.route">
+              <mat-icon *ngIf='link?.icon'>{{ link.icon }}</mat-icon>
+              {{ link?.label }}
+            </a>
+          </ng-template>
+          <!-- // ROUTE TEMPLATE -->
+          <!-- // CHECK IF IT'S A LINK OR A ROUTE -->
+        </ng-template>
+        <!-- // LINK WITHOUT CHILDREN TEMPLATE -->
+        <!-- // CHECK IF LINK HAS CHILDREN FIRST -->
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
+
+
+
+
+
+
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav mat-elevation-z7" [opened]='options.opened' [mode]="options.mode"
+    [fixedInViewport]='options.fixed' [fixedTopGap]="options.top" [fixedBottomGap]="options.bottom">
+    <app-avatar [user]='user'></app-avatar>
+    <mat-nav-list>
+      <!-- ACTIONS  -->
+      <ng-container *ngFor='let action of actions'>
+        <!-- ACTION WITH CHILDREN TEMPLATE -->
+        <ng-container *ngIf='!!action?.children?.length; else singleAction'>
+          <!-- PARENT ACTION TO EXPAND CHILDREN -->
+          <a mat-list-item (click)='action.showChildren = !!!action?.showChildren'>
+            <mat-icon *ngIf='action?.icon'>{{ action.icon }}</mat-icon>
+            {{ action?.label }}
+            <mat-icon class='ml-auto'>{{ !!action?.showChildren ? "arrow_drop_down" : "arrow_left"}}</mat-icon>
+          </a>
+          <!-- // PARENT ACTION TO EXPAND CHILDREN -->
+          <!-- SHOW CHILDREN IF showChildren IS TRUE -->
+          <ng-container *ngIf='!!action?.showChildren'>
+            <!-- CHILD ACTIONS TEMPLATE -->
+            <ng-container *ngFor='let childAction of action.children'>
+              <a mat-list-item routerLink='{{action.route}}/{{childAction.route}}' routerLinkActive='active'>
+                <span class='pl-5'>
+                  <mat-icon *ngIf='childAction?.icon'>{{ childAction.icon }}</mat-icon>
+                  {{ childAction?.label }}
+                </span>
+              </a>
+            </ng-container>
+            <!-- // CHILD ACTIONS TEMPLATE -->
+          </ng-container>
+        </ng-container>
+        <!-- // ACTION WITH CHILDREN TEMPLATE -->
+        <!-- ACTION WITHOUT CHILDREN TEMPLATE -->
+        <ng-template #singleAction>
+          <a mat-list-item [routerLink]="action?.route" routerLinkActive='active'>
+            <mat-icon *ngIf='action?.icon;'>{{ action.icon }}</mat-icon>
+            {{ action?.label }}
+          </a>
+        </ng-template>
+        <!-- // ACTION WITHOUT CHILDREN TEMPLATE -->
+      </ng-container>
+
+
+      <!-- LINKS  -->
+      <ng-container *ngFor='let link of links'>
+        <!-- LINK WITH CHILDREN TEMPLATE -->
+        <ng-container *ngIf='!!link?.children?.length; else singleLink'>
+          <!-- PARENT LINK TO EXPAND CHILDREN -->
+          <a mat-list-item (click)='link.showChildren = !!!link?.showChildren'>
+            <mat-icon *ngIf='link?.icon'>{{ link.icon }}</mat-icon>
+            {{ link?.label }}
+            <mat-icon class='ml-auto'>{{ !!link?.showChildren ? "arrow_drop_down" : "arrow_left"}}</mat-icon>
+          </a>
+          <!-- // PARENT LINK TO EXPAND CHILDREN -->
+          <!-- SHOW CHILDREN IF showChildren IS TRUE -->
+          <ng-container *ngIf='!!link?.showChildren'>
+            <!-- CHILD LINKS TEMPLATE -->
+            <ng-container *ngFor='let childLink of link.children'>
+              <div class="row mr-0">
+                <div class="col-10">
+                  <a mat-list-item [href]="childLink?.route" target='_blank'>
+                    <span class='pl-5'>
+                      <mat-icon *ngIf='childLink?.icon'>{{ childLink.icon }}</mat-icon>
+                      {{ childLink?.label }}
+                    </span>
+                  </a>
+                </div>
+                <div class="col-2 px-0 pt-1">
+                  <button class='star-quickLink' mat-icon-button type='button' (click)='toggleQuickLink(childLink)'
+                    [disabled]='!(childLink | isQuickLink:quickLinks:quickLinksRefresh) && quickLinks?.length >= quickLinksLimit'>
+                    <mat-icon class='mx-0'>
+                      {{ (childLink | isQuickLink:quickLinks:quickLinksRefresh) ? "star" : "star_border"}}
+                    </mat-icon>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+            <!-- // CHILD LINKS TEMPLATE -->
+          </ng-container>
+        </ng-container>
+        <!-- // LINK WITH CHILDREN TEMPLATE -->
+        <!-- LINK WITHOUT CHILDREN TEMPLATE -->
+        <ng-template #singleLink>
+          <a mat-list-item [href]="link?.route" target='_blank'>
+            <mat-icon *ngIf='link?.icon'>{{ link.icon }}</mat-icon>
+            {{ link?.label }}
+            <button mat-icon-button type='button' class='ml-auto' (click)='toggleQuickLink(link)'>
+              <mat-icon class='mx-0'>
+                {{ (childLink | isQuickLink:quickLinks:quickLinksRefresh) ? "star" : "star_border"}}
+              </mat-icon>
+            </button>
+          </a>
+        </ng-template>
+        <!-- // LINK WITHOUT CHILDREN TEMPLATE -->
+      </ng-container>
+    </mat-nav-list>
+    <mat-toolbar style='font-size: 17px;'>Developed by oreinosa at TICA</mat-toolbar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,89 @@
+<form #f='ngForm'>
+  <div class="row">
+    <div class="col-12 col-md-6 col-xl-4 my-2">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h3>Contact information</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-raised-button (click)='transferInformation("inbound")' class='m-2' type='button'>Copy from
+            Inbound</button>
+          <button mat-raised-button (click)='transferInformation("chat")' class='m-2' type='button'>Copy from
+            Chat</button>
+          <mat-form-field class="full-width">
+            <input matInput type="text" placeholder='Contact name' [(ngModel)]='comment.name' name='name'>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput type="text" placeholder='Email address' [(ngModel)]='comment.email' name='email'>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput type="text" placeholder='Phone number' [(ngModel)]='comment.phone' name='phone' required>
+            <mat-hint align='end'>This field is required</mat-hint>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput type="text" placeholder='Desired contact time' [(ngModel)]='comment.contactTime'
+              name='contactTime'>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-select placeholder='Desired contact channel' [(ngModel)]='comment.contactChannel'
+              name='contactChannel'>
+              <mat-option value='Either'>Either (Phone/email)</mat-option>
+              <mat-option value='Phone'>Phone</mat-option>
+              <mat-option value='Email'>Email</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12 col-md-6 col-xl-4 my-2">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h3>Case action plan</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder='Problem statement' rows='3' [(ngModel)]='comment.problem'
+              name='problem'></textarea>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder='Steps performed' rows='3' [(ngModel)]='comment.steps'
+              name='steps'></textarea>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder='PIN verification' rows='4' [(ngModel)]='comment.pinVerification'
+              name='pinVerification' required></textarea>
+            <mat-hint align='end'>This field is required</mat-hint>
+          </mat-form-field>
+          <div class="my-2">
+            <button mat-raised-button class='mx-2' *ngFor="let justification of justifications"
+              (click)="toggleJustification(justification)" [disabled]='f?.controls?.pinVerification?.valid'>
+              {{justification}}
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12 col-md-6 col-xl-4 my-2">
+      <mat-card>
+        <mat-card-content>
+          <div class="transfer-reasons">
+            <mat-form-field class="full-width">
+              <mat-label>
+                {{ !!specialization ? (specialization+" transfer reasons") : "Select your specialization" }}
+              </mat-label>
+              <mat-select [(ngModel)]='comment.transferReason' name='transferReason' required>
+                <mat-option *ngFor='let reason of currentReasons' [value]='reason'>{{ reason }}</mat-option>
+              </mat-select>
+              <mat-hint align='end'>This field is required</mat-hint>
+            </mat-form-field>
+          </div>
+          <app-comment [form]='f' type='transfer'></app-comment>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</form>

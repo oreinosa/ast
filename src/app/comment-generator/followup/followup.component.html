@@ -1,0 +1,67 @@
+<form #f='ngForm'>
+  <div class="row">
+    <div class="col-12 col-md-6 col-xl-4 my-2">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <h3>Case information</h3>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field class="full-width">
+            <mat-select placeholder='Follow up method' [(ngModel)]='comment.method' name='method'>
+              <mat-option value='Phone'>Phone</mat-option>
+              <mat-option value='Email'>Email</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder='What was discussed in the call' rows='3' [(ngModel)]='comment.discussed'
+              name='discussed'></textarea>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder='Suggested next steps' rows='3' [(ngModel)]='comment.next'
+              name='next'></textarea>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12 col-md-6 col-xl-4 my-2">
+      <mat-card>
+        <!-- <mat-card-header>
+          <mat-card-title>
+            <h3>Case action plan</h3>
+          </mat-card-title>
+        </mat-card-header> -->
+        <mat-card-content>
+          <mat-form-field class="full-width">
+            <mat-select placeholder='Feature idea' [(ngModel)]='comment.featureIdea' name='featureIdea'>
+              <mat-option value=''></mat-option>
+              <mat-option *ngFor="let featureIdea of featureIdeas" [value]="featureIdea" [matTooltip]='featureIdea'>
+                {{featureIdea}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="full-width mt-">
+            <input matInput [matDatepicker]="picker" placeholder="Next follow up date"
+              [(ngModel)]='comment.followupDate' name='followupDate'>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="full-width mt-">
+            <mat-select placeholder='Case status' [(ngModel)]='comment.status' name='status' required>
+              <mat-option *ngFor="let status of statuses" [value]="status">
+                {{status}}
+              </mat-option>
+            </mat-select>
+            <mat-hint align='end'>This field is required</mat-hint>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12 col-md-6 col-xl-4 my-2">
+      <mat-card>
+        <app-comment [form]='f' type='followup'></app-comment>
+      </mat-card>
+    </div>
+  </div>
+</form>

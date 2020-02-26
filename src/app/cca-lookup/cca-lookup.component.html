@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12">
+    <mat-card>
+      <h1 class="text-center">CCA Lookup</h1>
+    </mat-card>
+  </div>
+  <div class="col-12 my-2">
+    <mat-card>
+      <mat-form-field>
+        <mat-select placeholder='PFI type' [(ngModel)]='selectedType' (selectionChange)='selectType($event.value)'>
+          <mat-option value='core'>G Suite</mat-option>
+          <!-- <mat-option value='chrome'>Chrome/Devices</mat-option> -->
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="PFI tag" [matAutocomplete]="auto" [formControl]="pfiCtrl" required>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='searchCases($event.option.value)'
+          [displayWith]='displayFn'>
+          <mat-option *ngFor="let pfi of filteredPFIs | async" [value]="pfi">
+            {{ pfi.tag }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </mat-card>
+  </div>
+  <div class="col-12 my-2" *ngIf='pfis.length'>
+    <mat-card>
+      <ng-container *ngIf='cases.length;else noCases'>
+        <h4>Found {{ cases.length }} cases with <b>{{ selectedPfi.tag }}</b></h4>
+        <h6><i>{{ selectedPfi.description }}</i></h6>
+        <br>
+        <app-cases [cases]='cases'></app-cases>
+      </ng-container>
+      <ng-template #noCases>
+        <ng-container *ngIf='pfiCtrl.disabled;else notLoading'>
+          <h4>Searching cases with <b>{{ selectedPfi.tag }}</b></h4>
+          <mat-spinner diameter='50' class="mx-auto"></mat-spinner>
+        </ng-container>
+        <ng-template #notLoading>
+          <h4 *ngIf='selectedPfi;else notFound'>
+            No cases found with {{ selectedPfi.tag }}
+          </h4>
+          <ng-template #notFound>
+            <h4> Please select a tag to search for cases... </h4>
+          </ng-template>
+        </ng-template>
+      </ng-template>
+    </mat-card>
+  </div>
+</div>

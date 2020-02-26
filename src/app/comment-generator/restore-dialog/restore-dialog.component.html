@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Restore comment</h1>
+<div mat-dialog-content>
+  <ng-container *ngIf='comments;else loadingComments'>
+    <ng-container *ngIf='comments.length;else noComments'>
+      <div class="row">
+        <div class="col-12 comment-container">
+          <p style="white-space: pre-line" *ngIf='commentString'>{{ commentString  }}</p>
+        </div>
+        <div class="col-12 my-2">
+          <h6 class="text-center" *ngIf='data?.pendingWork'>
+            You have pending job on the current form, please check this to proceed with restoring the old comment (form
+            will be reset)
+            <br>
+            <mat-checkbox [(ngModel)]='confirmRestore' name='confirmRestore'>
+              Confirm
+            </mat-checkbox>
+          </h6>
+        </div>
+        <div class="col-4">
+          <button mat-icon-button type='button' (click)='changeIndex(index-1)' [disabled]='index == 0'
+            class='float-right'>
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+        </div>
+        <div class="col-4">
+          <mat-form-field class="full-width">
+            <mat-select placeholder='#' [(ngModel)]='index' name='index' (selectionChange)='changeIndex($event.value)'>
+              <mat-option *ngFor='let page of pages' [value]='page'>{{ page+1 }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <button mat-icon-button type='button' (click)='changeIndex(index+1)'
+            [disabled]='index == (comments?.length-1)' class='float-left'>
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noComments>
+      <h6>You currently don't have saved comments</h6>
+    </ng-template>
+  </ng-container>
+  <ng-template #loadingComments>
+    <mat-spinner class="mx-auto"></mat-spinner>
+  </ng-template>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button cdkFocusInitial *ngIf='comments?.length' (click)='onRestore()'
+    [disabled]='data?.pendingWork && !confirmRestore'>Restore</button>
+</div>

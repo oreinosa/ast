@@ -1,0 +1,24 @@
+<mat-card class="text-center">
+  <h1>Comment Generator</h1>
+  <mat-form-field class='col-12 col-sm-6 col-lg-4'>
+    <mat-select matInput type="text" placeholder='Select your specialization' (selectionChange)='changeSpecialization(specialization)'
+      [(ngModel)]='specialization'>
+      <mat-option *ngFor='let specialization of specializations' [value]='specialization'>{{ specialization }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of links" [routerLink]="link.route" routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive">
+      {{link.label}}
+    </a>
+  </nav>
+</mat-card>
+<div class='my-2'>
+  <ng-container *ngIf='specialization !== "";else noSpecialization'>
+    <router-outlet></router-outlet>
+  </ng-container>
+  <ng-template #noSpecialization>
+    <h1>Please select your specialization first!</h1>
+  </ng-template>
+</div>

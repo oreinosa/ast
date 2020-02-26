@@ -1,0 +1,20 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.full-width{
+  width: 100%;
+}
+.spacer{
+  flex: 1 1 auto;
+}
+
+.landing-image-container{
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  img{
+    max-height:500px; 
+  }
+}

@@ -1,0 +1,106 @@
+// @import "../../../_theme.scss";
+
+// .mat-sidenav{
+//   // background: $primary-lighter;
+//   min-width: 300px;
+//   display: flex;
+//   height:100%;
+
+//   // width: 100%;
+//   .mat-icon{
+//     margin-right: 10px;
+//     vertical-align: bottom;
+//   }
+//   button .mat-icon{
+//     vertical-align: middle;
+//   }
+// }
+// .sidenav-toolbar{
+//   background: $primary;
+// }
+
+// .sidenav-container {
+//   // position: absolute;
+//   top: 60px;
+//   // height:100%;
+//   // bottom: 60px;
+// }
+
+// #mainToolbar{
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+// }
+
+.active{
+  background-color: rgba(0,0,0,0.05)!important;
+  // color:white;
+  font-weight: bold;
+}
+
+
+.example-container {
+  position: absolute;
+  top: 56px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+}
+
+.example-sidenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  // padding: 7px 0px;
+  // height: 100%;
+  // background-color: rgba(0, 0, 0, 0.03);
+  .mat-icon{
+    margin-right: 10px;
+    vertical-align: bottom;
+  }
+  button .mat-icon{
+    vertical-align: middle;
+  }
+}
+
+.mat-sidenav-content{
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.example-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--primary-default);
+  color: white;
+}
+
+.footer {
+  // height:25px;
+  font-size: 15px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+// .example-is-mobile .example-header {
+//   position: fixed;
+//   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+//   z-index: 2;
+// }
+
+// .example-sidenav-container {
+//   /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+//      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+//   flex: 1;
+// }
+
+// .example-is-mobile .example-sidenav-container {
+//   /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+//      `<body>` to be our scrolling element for mobile layouts. */
+//   flex: 1 0 auto;
+// }

@@ -1,0 +1,42 @@
+<div class="my-2">
+  <button mat-raised-button type='button' [disabled]='loading' (click)='refreshTable()'>Refresh</button>
+  <span *ngIf='lastRefresh' class='ml-3'>Last refresh at {{ lastRefresh | date:"medium" }}</span>
+</div>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0">
+  <!-- Position Column -->
+  <ng-container matColumnDef="ldap">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> LDAP </th>
+    <td mat-cell *matCellDef="let element"> {{element.ldap}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="monthly">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Monthly </th>
+    <td mat-cell *matCellDef="let element"> {{element.monthly}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="daily">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Daily </th>
+    <td mat-cell *matCellDef="let element"> {{element.daily}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="lastAssigned">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last assigned </th>
+    <td mat-cell *matCellDef="let element">
+      {{element.lastAssigned === "" ? "-----" : (element.lastAssigned | date:"medium") }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<ng-container *ngIf='loading'>
+  <mat-spinner class="mx-auto"></mat-spinner>
+</ng-container>
+<mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]='pageSize' showFirstLastButtons></mat-paginator>

@@ -1,0 +1,9 @@
+<button mat-icon-button type='button' [matMenuTriggerFor]="menu">
+  <mat-icon>palette</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item *ngFor='let theme of themes' (click)='setTheme(theme)'>
+    <mat-icon [ngStyle]='{"color": theme.color}'>radio_button_checked</mat-icon>
+    <span>{{ theme.label }}</span>
+  </button>
+</mat-menu>

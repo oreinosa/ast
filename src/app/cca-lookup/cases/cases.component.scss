@@ -1,0 +1,15 @@
+.mat-table{
+  width:100%;
+  .mat-cell{
+    padding: 0 5px;
+  }
+  .mat-column-closedDate{
+    width: 35%;
+  }
+  .mat-column-caseNumber{
+    width: 35%;
+  }
+  .mat-column-lob{
+    width: 30%;
+  }
+}

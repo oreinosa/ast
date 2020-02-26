@@ -1,0 +1,70 @@
+<mat-card>
+  <button type='button' mat-button (click)='refreshCommunications()' [disabled]='loading'>Refresh</button>
+  <mat-form-field class='full-width'>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search communications">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z0 full-width" matSort>
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="timestamp">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.timestamp | date:"EEEE, MMMM d, y, h:mm:ss a"}} </td>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    </ng-container>
+
+    <!-- Subject Column -->
+    <ng-container matColumnDef="subject">
+      <th mat-header-cell *matHeaderCellDef> Subject </th>
+      <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+    </ng-container>
+
+    <!-- References Column -->
+    <ng-container matColumnDef="references">
+      <th mat-header-cell *matHeaderCellDef> References </th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf='element?.imageLink'>
+          <p>
+            <a [href]="element.imageLink" target="_blank" >{{ element.imageLink }}</a>
+          </p>
+        </ng-container>
+        <ng-container *ngIf='element?.link?.length'>
+          <p *ngFor='let reference of element?.link;let i=index'>
+            <a target="_blank" [href]="reference[0]">
+              {{ reference[1] }}
+            </a>
+          </p>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button type='button' (click)='viewCommunication(element)' class='m-2'>
+          View communication
+        </button>
+        <button mat-button type='button' (click)='acknowledgeCommunication(element)' class='m-2'
+        *ngIf='element?.required' [disabled]='!!element?.ack || acknowledging'>
+        {{ !!element?.ack ? "Acknowledged" : "Acknowledge" }}
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <ng-container *ngIf='loading'>
+    <mat-spinner class="mx-auto" diameter='50'></mat-spinner>
+  </ng-container>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</mat-card>

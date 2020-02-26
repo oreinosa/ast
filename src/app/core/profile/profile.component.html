@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-12">
+    <mat-card>
+      <h1 class="text-center">Profile</h1>
+    </mat-card>
+  </div>
+  <div class="col-12 col-sm-10 col-md-8 col-lg-6 my-2">
+    <mat-card>
+      <ng-container *ngIf='user as u; else loadingUser'>
+        <!-- <button type='button' mat-icon-button class='float-right'>
+          <mat-icon>edit</mat-icon>
+        </button> -->
+        <h4 *ngIf='u?.name'>Name : <span>{{ u?.name }}</span></h4>
+        <h4 *ngIf='u?.email'>Email address : <span>{{ u?.email }}</span></h4>
+        <h4 *ngIf='u?.specialization'>Specialization : <span>{{ u?.specialization }}</span></h4>
+        <h4 *ngIf='u?.language'>Language : <span>{{ u?.language }}</span></h4>
+        <h4 *ngIf='u?.channel'>Channel : <span>{{ u?.channel }}</span></h4>
+        <h4 *ngIf='u?.supervisorName'>Supervisor : <span>{{ u?.supervisorName }}</span></h4>
+        <!-- <h4 *ngIf='u?.supervisorName'>Supervisor : <span>{{ u?.supervisor }}</span></h4> -->
+        <!-- <ng-container *ngIf='!editing'>
+          <ng-container *ngIf='u?.shirt;else noShirt'>
+            <h4>Channel : <span>{{ u?.channel }}</span></h4>
+          </ng-container>
+          <ng-template #noShirt>
+            <h4>We currently don't have your shirt size</h4>
+          </ng-template>
+          <ng-container *ngIf='u?.shirt;else noShirt'>
+            <h4>Channel : <span>{{ u?.channel }}</span></h4>
+          </ng-container>
+          <ng-template #noShirt>
+            <h4>We currently don't have your shirt size</h4>
+          </ng-template>
+          <ng-container *ngIf='u?.shirt;else noShirt'>
+            <h4>Channel : <span>{{ u?.channel }}</span></h4>
+          </ng-container>
+          <ng-template #noShirt>
+            <h4>We currently don't have your shirt size</h4>
+          </ng-template>
+        </ng-container> -->
+      </ng-container>
+      <ng-template #loadingUser>
+        <mat-spinner class="mx-auto"></mat-spinner>
+      </ng-template>
+    </mat-card>
+  </div>
+</div>

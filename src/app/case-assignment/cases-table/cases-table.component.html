@@ -1,0 +1,55 @@
+<div class="my-2">
+  <button mat-raised-button type='button' [disabled]='loading || removing' (click)='refreshTable()'>Refresh</button>
+  <span *ngIf='lastRefresh' class='ml-3'>Last refresh at {{ lastRefresh | date:"medium" }}</span>
+</div>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0">
+  <ng-container matColumnDef="timestamp">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned at </th>
+    <td mat-cell *matCellDef="let element"> {{element.timestamp | date:"medium"}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="caseNumber">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Case </th>
+    <td mat-cell *matCellDef="let element">
+      <a target='_blank'  [href]="'https://unify--c.na4.visual.force.com/apex/case?num='+element.caseNumber">
+        {{ element.caseNumber }}
+      </a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="assignedTo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned to </th>
+    <td mat-cell *matCellDef="let element"> {{element.assignedTo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="returnTo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Return to </th>
+    <td mat-cell *matCellDef="let element"> {{element.returnTo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="assignedBy">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned by </th>
+    <td mat-cell *matCellDef="let element"> {{element.assignedBy}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button type='button' (click)='confirmRemove(element.id)' [disabled]='!!removing'>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<ng-container *ngIf='loading'>
+  <mat-spinner class="mx-auto my-3" diameter='45'></mat-spinner>
+</ng-container>
+<mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]='pageSize' showFirstLastButtons></mat-paginator>
